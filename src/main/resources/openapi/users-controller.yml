@@ -1,0 +1,50 @@
+openapi: 3.0.1
+info:
+  title: User Info API
+  description: API for retrieving consolidated information about users.
+  version: 1.0.0
+paths:
+  /api/v1/users:
+    get:
+      summary: Get consolidated user information
+      description: Retrieves consolidated data from multiple sources.
+      responses:
+        '200':
+          description: Consolidated user data retrieved successfully.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/UserResponseDTO'
+        '204':
+          description: No content available.
+        '400':
+          description: Invalid request.
+          content:
+            text/plain:
+              schema:
+                type: string
+        '500':
+          description: Internal server error.
+          content:
+            text/plain:
+              schema:
+                type: string
+components:
+  schemas:
+    UserResponseDTO:
+      type: object
+      properties:
+        id:
+          type: string
+          description: Unique identifier for the user.
+        name:
+          type: string
+          description: Name of the user.
+        email:
+          type: string
+          description: Email address of the user.
+        otherField:
+          type: string
+          description: Other relevant information about the user.

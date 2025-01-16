@@ -1,0 +1,60 @@
+application:
+  data-sources:
+    - name: 'data-base-1'
+      strategy: 'postgres'
+      url: ${SPRING_DATASOURCE_POSTGRES_URL:jdbc:postgresql://localhost:5432/postgres}
+      table: 'users'
+      user: ${SPRING_DATASOURCE_POSTGRES_USER:postgres}
+      password: ${SPRING_DATASOURCE_POSTGRES_PASSWORD:postgres}
+      mapping:
+        id: 'user_id'
+        username: 'login'
+        name: 'first_name'
+        surname: 'last_name'
+    - name: 'data-base-2'
+      strategy: 'mysql'
+      url: ${SPRING_DATASOURCE_MYSQL_URL:jdbc:mysql://localhost:3306/mysql}
+      table: 'users'
+      user: ${SPRING_DATASOURCE_MYSQL_USER:mysql}
+      password: ${SPRING_DATASOURCE_MYSQL_PASSWORD:mysql}
+      mapping:
+        id: 'emp_id'
+        username: 'username'
+        name: 'first_name'
+        surname: 'last_name'
+#    - name: data-base-3
+#      strategy: oracle
+#      url: jdbc:oracle:thin:@localhost:1521:orcl
+#      table: staff
+#      user: ${SPRING_DATASOURCE_ORACLE_USER:oracle}
+#      password: ${SPRING_DATASOURCE_ORACLE_PASSWORD:secret}
+#      mapping:
+#        id: staff_id
+#        username: user_name
+#        name: full_name
+#        surname: surname
+
+springdoc:
+  swagger-ui:
+    enabled: true
+    path: /swagger-ui.html
+  api-docs:
+    enabled: true
+    path: /v3/api-docs
+    groups:
+      users-api:
+        paths-to-match: /api/v1/users/**
+        spec-url: classpath:/openapi/users-controller.yml
+
+logging:
+  level:
+    root: INFO
+    org.hibernate.SQL: DEBUG
+    org.hibernate.orm.jdbc.bind: TRACE
+    org.hibernate.type.descriptor.sql: TRACE
+    io.r2dbc.postgresql.QUERY: DEBUG
+    org.springframework.r2dbc: DEBUG
+
+
+server:
+  port: ${PORT:8080}
